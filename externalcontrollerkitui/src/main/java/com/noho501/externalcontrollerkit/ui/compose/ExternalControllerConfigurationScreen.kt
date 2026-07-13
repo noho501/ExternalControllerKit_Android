@@ -11,25 +11,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenu
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.PullToRefreshBox
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -50,6 +47,8 @@ import com.noho501.externalcontrollerkit.ui.localization.AndroidLocalizationProv
 import com.noho501.externalcontrollerkit.ui.localization.LocalizationProvider
 import com.noho501.externalcontrollerkit.ui.viewmodel.ExternalControllerUiState
 import com.noho501.externalcontrollerkit.ui.viewmodel.ExternalControllerViewModel
+import androidx.compose.foundation.lazy.items as itemsList
+import androidx.compose.foundation.lazy.grid.items as itemsGrid
 
 @Composable
 fun ExternalControllerConfigurationRoute(
@@ -222,14 +221,15 @@ private fun ActionMappings(
 ) {
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
         val itemsModifier = Modifier.fillMaxWidth()
-        if (maxWidth >= 700.dp) {
+
+        if (this.maxWidth >= 700.dp) {
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(minSize = 280.dp),
                 modifier = itemsModifier,
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                items(actions, key = { it.actionId }) { action ->
+                itemsGrid(actions, key = { it.actionId }) { action ->
                     ActionMappingCard(
                         action = action,
                         selectedDevice = selectedDevice,
@@ -253,7 +253,7 @@ private fun ActionMappings(
                 modifier = itemsModifier,
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                items(actions, key = { it.actionId }) { action ->
+                itemsList(actions, key = { it.actionId }) { action ->
                     ActionMappingCard(
                         action = action,
                         selectedDevice = selectedDevice,

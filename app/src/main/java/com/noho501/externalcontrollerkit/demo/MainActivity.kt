@@ -1,5 +1,6 @@
 package com.noho501.externalcontrollerkit.demo
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.MotionEvent
@@ -31,6 +32,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @SuppressLint("RestrictedApi")
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         val handled = externalController.onKeyEvent(event)
         return handled || super.dispatchKeyEvent(event)

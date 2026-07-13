@@ -14,7 +14,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class KeyboardProvider @Inject constructor(
+internal class KeyboardProvider @Inject constructor(
     @ApplicationContext context: Context,
     logger: Logger,
 ) : AbstractInputDeviceProvider(

@@ -37,6 +37,7 @@ internal abstract class AbstractInputDeviceProvider(
 
     override suspend fun refreshConnectedDevices() {
         val devices = inputManager.inputDeviceIds
+            .toList()
             .mapNotNull { inputManager.getInputDevice(it) }
             .filter(::matches)
             .map(::toDevice)

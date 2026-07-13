@@ -13,9 +13,10 @@ object NoOpLogger : Logger {
     override fun error(message: String, throwable: Throwable?) = Unit
 }
 
-class ConsoleLogger @Inject constructor(
-    private val tag: String = "ExternalController",
-) : Logger {
+class ConsoleLogger @Inject constructor() : Logger {
+
+    private val tag: String = "ExternalController"
+
     override fun debug(message: String) {
         Log.d(tag, message)
     }

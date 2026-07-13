@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @Singleton
-class ExternalController @Inject constructor(
+class ExternalController @Inject internal constructor(
     gameControllerProvider: GameControllerProvider,
     keyboardProvider: KeyboardProvider,
     midiProvider: MidiProvider,
