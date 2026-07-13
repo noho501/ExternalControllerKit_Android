@@ -13,6 +13,7 @@ interface LocalizationProvider {
     val pressAnyButton: String
     val unmapped: String
     val map: String
+    val cancel: String
     val clear: String
     val runtimeInputEnabled: String
 }
@@ -27,6 +28,7 @@ class AndroidLocalizationProvider(context: Context) : LocalizationProvider {
     override val pressAnyButton: String = context.getString(R.string.external_controller_press_any_button)
     override val unmapped: String = context.getString(R.string.external_controller_unmapped)
     override val map: String = context.getString(R.string.external_controller_map)
+    override val cancel: String = context.getString(R.string.external_controller_cancel)
     override val clear: String = context.getString(R.string.external_controller_clear)
     override val runtimeInputEnabled: String = context.getString(R.string.external_controller_runtime_input)
 }

@@ -8,6 +8,7 @@
     <string name="external_controller_press_any_button">Press any button…</string>
     <string name="external_controller_unmapped">Unmapped</string>
     <string name="external_controller_map">Map</string>
+    <string name="external_controller_cancel">Cancel</string>
     <string name="external_controller_clear">Clear</string>
     <string name="external_controller_runtime_input">Runtime input enabled</string>
 </resources>

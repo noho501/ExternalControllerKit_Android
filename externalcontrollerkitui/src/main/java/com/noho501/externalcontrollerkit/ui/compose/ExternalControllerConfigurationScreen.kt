@@ -153,9 +153,11 @@ fun ExternalControllerConfigurationScreen(
                     listeningActionId = uiState.managerState.listeningActionId,
                     unmappedLabel = localization.unmapped,
                     mapLabel = localization.map,
+                    cancelLabel = localization.cancel,
                     clearLabel = localization.clear,
                     inputLabelFormatter = inputLabelFormatter,
                     onStartListening = onStartListening,
+                    onStopListening = onStopListening,
                     onClearMapping = onClearMapping,
                 )
             }
@@ -211,9 +213,11 @@ private fun ActionMappings(
     listeningActionId: String?,
     unmappedLabel: String,
     mapLabel: String,
+    cancelLabel: String,
     clearLabel: String,
     inputLabelFormatter: (String) -> String,
     onStartListening: (String) -> Unit,
+    onStopListening: () -> Unit,
     onClearMapping: (String) -> Unit,
 ) {
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
@@ -235,9 +239,11 @@ private fun ActionMappings(
                         isListening = listeningActionId == action.actionId,
                         unmappedLabel = unmappedLabel,
                         mapLabel = mapLabel,
+                        cancelLabel = cancelLabel,
                         clearLabel = clearLabel,
                         inputLabelFormatter = inputLabelFormatter,
                         onStartListening = onStartListening,
+                        onStopListening = onStopListening,
                         onClearMapping = onClearMapping,
                     )
                 }
@@ -257,9 +263,11 @@ private fun ActionMappings(
                         isListening = listeningActionId == action.actionId,
                         unmappedLabel = unmappedLabel,
                         mapLabel = mapLabel,
+                        cancelLabel = cancelLabel,
                         clearLabel = clearLabel,
                         inputLabelFormatter = inputLabelFormatter,
                         onStartListening = onStartListening,
+                        onStopListening = onStopListening,
                         onClearMapping = onClearMapping,
                     )
                 }
@@ -276,9 +284,11 @@ private fun ActionMappingCard(
     isListening: Boolean,
     unmappedLabel: String,
     mapLabel: String,
+    cancelLabel: String,
     clearLabel: String,
     inputLabelFormatter: (String) -> String,
     onStartListening: (String) -> Unit,
+    onStopListening: () -> Unit,
     onClearMapping: (String) -> Unit,
 ) {
     Card(modifier = Modifier.fillMaxWidth()) {
@@ -298,9 +308,15 @@ private fun ActionMappingCard(
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedButton(
                     enabled = selectedDevice != null,
-                    onClick = { onStartListening(action.actionId) },
+                    onClick = {
+                        if (isListening) {
+                            onStopListening()
+                        } else {
+                            onStartListening(action.actionId)
+                        }
+                    },
                 ) {
-                    Text(if (isListening) mapLabel else mapLabel)
+                    Text(if (isListening) cancelLabel else mapLabel)
                 }
                 if (mapping != null) {
                     OutlinedButton(onClick = { onClearMapping(action.actionId) }) {
