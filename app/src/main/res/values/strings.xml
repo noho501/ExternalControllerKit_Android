@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">External Controller Demo</string>
+    <string name="open_external_controller">Open External Controller</string>
+    <string name="sample_actions">Sample Actions</string>
+    <string name="live_event_log">Live Event Log</string>
+    <string name="current_action">Current Action</string>
+    <string name="none">None</string>
+    <string name="connected_devices">Connected Devices</string>
+</resources>
