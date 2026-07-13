@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 
-internal abstract class AbstractInputDeviceProvider(
+abstract class AbstractInputDeviceProvider(
     private val inputManager: InputManager,
     private val logger: Logger,
 ) : ExternalControllerProvider, InputManager.InputDeviceListener {

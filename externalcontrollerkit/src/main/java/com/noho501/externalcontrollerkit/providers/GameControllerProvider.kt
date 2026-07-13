@@ -15,7 +15,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-internal class GameControllerProvider @Inject constructor(
+class GameControllerProvider @Inject constructor(
     @ApplicationContext context: Context,
     logger: Logger,
 ) : AbstractInputDeviceProvider(
