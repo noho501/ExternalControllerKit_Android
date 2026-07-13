@@ -1,0 +1,14 @@
+<resources>
+    <string name="external_controller_title">External Controller</string>
+    <string name="external_controller_close">Close</string>
+    <string name="external_controller_reset_all">Reset All</string>
+    <string name="external_controller_device">Device</string>
+    <string name="external_controller_no_devices">No devices connected</string>
+    <string name="external_controller_pull_to_refresh">Pull to refresh devices</string>
+    <string name="external_controller_press_any_button">Press any button…</string>
+    <string name="external_controller_unmapped">Unmapped</string>
+    <string name="external_controller_map">Map</string>
+    <string name="external_controller_cancel">Cancel</string>
+    <string name="external_controller_clear">Clear</string>
+    <string name="external_controller_runtime_input">Runtime input enabled</string>
+</resources>
