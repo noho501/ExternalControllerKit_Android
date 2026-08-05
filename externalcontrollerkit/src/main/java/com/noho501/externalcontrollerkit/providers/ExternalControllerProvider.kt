@@ -17,6 +17,6 @@ interface ExternalControllerProvider {
     fun start(scope: CoroutineScope)
     fun stop()
     suspend fun refreshConnectedDevices()
-    fun handleKeyEvent(event: KeyEvent): Boolean = false
-    fun handleMotionEvent(event: MotionEvent): Boolean = false
+    fun handleKeyEvent(event: KeyEvent, shouldConsume: (String, String) -> Boolean): Boolean = false
+    fun handleMotionEvent(event: MotionEvent, shouldConsume: (String, String) -> Boolean): Boolean = false
 }

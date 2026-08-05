@@ -134,9 +134,15 @@ class ExternalController @Inject constructor(
         }
     }
 
-    fun onKeyEvent(event: KeyEvent): Boolean = providers.any { it.handleKeyEvent(event) }
+    private fun shouldConsumeInput(deviceId: String, inputId: String): Boolean {
+        if (_managerState.value.listeningActionId != null) return true
 
-    fun onMotionEvent(event: MotionEvent): Boolean = providers.any { it.handleMotionEvent(event) }
+        return _mappings.value.any { it.deviceId == deviceId && it.inputId == inputId }
+    }
+
+    fun onKeyEvent(event: KeyEvent): Boolean = providers.any { it.handleKeyEvent(event, ::shouldConsumeInput) }
+
+    fun onMotionEvent(event: MotionEvent): Boolean = providers.any { it.handleMotionEvent(event, ::shouldConsumeInput) }
 
     private suspend fun handleInputEvent(event: InputEvent) {
         _inputEvents.emit(event)

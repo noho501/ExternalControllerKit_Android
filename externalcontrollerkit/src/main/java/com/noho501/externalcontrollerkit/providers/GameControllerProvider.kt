@@ -24,20 +24,26 @@ class GameControllerProvider @Inject constructor(
 ) {
     override val providerKind: DeviceKind = DeviceKind.GAME_CONTROLLER
 
-    override fun handleKeyEvent(event: KeyEvent): Boolean {
+    override fun handleKeyEvent(event: KeyEvent, shouldConsume: (String, String) -> Boolean): Boolean {
         val device = lookupDevice(event.deviceId) ?: return false
         if (!matches(device)) return false
+
+        val deviceId = toDevice(device).id
+        val inputId = InputIdFormatter.gamepadKey(event.keyCode)
+
+        if (!shouldConsume(deviceId, inputId)) return false
+
         return mutableInputEvents.tryEmit(
             InputEvent(
-                deviceId = toDevice(device).id,
-                inputId = InputIdFormatter.gamepadKey(event.keyCode),
+                deviceId = deviceId,
+                inputId = inputId,
                 value = InputValue.button(event.action == KeyEvent.ACTION_DOWN),
                 deviceKind = providerKind,
             )
         )
     }
 
-    override fun handleMotionEvent(event: MotionEvent): Boolean {
+    override fun handleMotionEvent(event: MotionEvent, shouldConsume: (String, String) -> Boolean): Boolean {
         val device = lookupDevice(event.deviceId) ?: return false
         if (!matches(device)) return false
         val trackedAxes = listOf(
@@ -51,18 +57,24 @@ class GameControllerProvider @Inject constructor(
             MotionEvent.AXIS_RTRIGGER,
         )
         var handled = false
+        val deviceId = toDevice(device).id
+
         trackedAxes.forEach { axis ->
             val value = event.getAxisValue(axis)
             if (InputIdFormatter.shouldEmitAxis(value)) {
                 val rawInputId = InputIdFormatter.axis(axis)
-                handled = mutableInputEvents.tryEmit(
-                    InputEvent(
-                        deviceId = toDevice(device).id,
-                        inputId = InputIdFormatter.axisLabel(rawInputId, value.toDouble()),
-                        value = InputValue.axis(value.toDouble()),
-                        deviceKind = providerKind,
-                    )
-                ) || handled
+                val inputId = InputIdFormatter.axisLabel(rawInputId, value.toDouble())
+
+                if (shouldConsume(deviceId, inputId)) {
+                    handled = mutableInputEvents.tryEmit(
+                        InputEvent(
+                            deviceId = deviceId,
+                            inputId = inputId,
+                            value = InputValue.axis(value.toDouble()),
+                            deviceKind = providerKind,
+                        )
+                    ) || handled
+                }
             }
         }
         return handled

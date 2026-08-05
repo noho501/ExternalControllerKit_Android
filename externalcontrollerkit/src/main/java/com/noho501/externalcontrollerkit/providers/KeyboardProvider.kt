@@ -23,13 +23,19 @@ class KeyboardProvider @Inject constructor(
 ) {
     override val providerKind: DeviceKind = DeviceKind.KEYBOARD
 
-    override fun handleKeyEvent(event: KeyEvent): Boolean {
+    override fun handleKeyEvent(event: KeyEvent, shouldConsume: (String, String) -> Boolean): Boolean {
         val device = lookupDevice(event.deviceId) ?: return false
         if (!matches(device)) return false
+
+        val deviceId = toDevice(device).id
+        val inputId = InputIdFormatter.keyboardKey(event.keyCode)
+
+        if (!shouldConsume(deviceId, inputId)) return false
+
         return mutableInputEvents.tryEmit(
             InputEvent(
-                deviceId = toDevice(device).id,
-                inputId = InputIdFormatter.keyboardKey(event.keyCode),
+                deviceId = deviceId,
+                inputId = inputId,
                 value = InputValue.button(event.action == KeyEvent.ACTION_DOWN),
                 deviceKind = providerKind,
             )
